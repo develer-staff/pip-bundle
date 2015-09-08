@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright 2015 Develer S.r.l. (http://www.develer.com/)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+#
+# See also:
+# https://pip.pypa.io/en/latest/user_guide.html#create-an-installation-bundle-with-compiled-dependencies
+#
+
+from __future__ import print_function
+
+from subprocess import check_call as call
+import contextlib
+import glob
+import os
+import os.path
+import shutil
+import sys
+import tempfile
+
+
+def main():
+    if len(sys.argv) < 2:
+        bundle_create()
+    else:
+        bundle_install(sys.argv[1])
+
+
+def bundle_create():
+    cwd = os.getcwd()
+
+    with create_tempdir() as tempdir:
+        call(["pip", "wheel", "-r", "requirements.txt", "--wheel-dir=" + tempdir])
+
+        with pushd(tempdir):
+            call(["tar", "cjf", os.path.join(cwd, "pip-bundle.tar.bz2")] + glob.glob("*.whl"))
+
+
+def bundle_install(bundle_file):
+    if not os.path.isfile(bundle_file):
+        print("{0}: No such file.".format(bundle_file))
+        sys.exit(1)
+
+    with create_tempdir() as tempdir:
+        call(["tar", "xf", bundle_file, "-C", tempdir])
+
+        with pushd(tempdir):
+            call(["pip", "install", "--force-reinstall", "--ignore-installed",
+                  "--upgrade", "--no-index", "--no-deps"] + glob.glob("*.whl"))
+
+
+@contextlib.contextmanager
+def create_tempdir():
+    path = tempfile.mkdtemp(prefix="pip-bundle-")
+    yield path
+    shutil.rmtree(path)
+
+
+@contextlib.contextmanager
+def pushd(path):
+    oldpath = os.getcwd()
+    os.chdir(path)
+    yield
+    os.chdir(oldpath)
+
+
+if __name__ == '__main__':
+    main()
