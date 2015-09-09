@@ -39,6 +39,12 @@ import tempfile
 import zipfile
 
 
+if not hasattr(zipfile.ZipFile, "__enter__"):
+    # Monkey patch ZipFile for Python 2.6 (which is still being used on CentOS 6)
+    zipfile.ZipFile.__enter__ = lambda self: self
+    zipfile.ZipFile.__exit__ = lambda self, *args: self.close()
+
+
 def main():
     args = parse_args()
 
