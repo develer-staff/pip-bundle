@@ -1,1 +1,2 @@
+include .releng.json
 include DESCRIPTION.rst
