@@ -19,6 +19,7 @@ setup(
     description='Bundle all pip dependencies in a single tarball',
     long_description=long_description,
     url='https://github.com/develersrl/pip-bundle',
+    install_requires=['argparse'],
     author='Lorenzo Villani',
     author_email='lvillani@develer.com',
     license='MIT',
