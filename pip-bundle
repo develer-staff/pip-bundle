@@ -83,7 +83,8 @@ def bundle_install(bundle_file):
         unzip(bundle_file, tempdir)
 
         with pushd(tempdir):
-            call(["pip", "install", "--force-reinstall", "--ignore-installed", "--upgrade", "--no-index", "--no-deps"] + glob.glob("*.whl"))
+            call(["pip", "install", "--force-reinstall", "--ignore-installed",
+                  "--upgrade", "--no-index", "--no-deps"] + glob.glob("*.whl"))
 
 
 def mkzip(archive, files):
