@@ -1,1 +1,1 @@
-{"version":"0.0.8","push":"git p \u0026\u0026 git p --tags \u0026\u0026 make upload"}
+{"version":"0.0.9","push":"git p \u0026\u0026 git p --tags \u0026\u0026 make upload"}
