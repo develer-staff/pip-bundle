@@ -1,8 +1,8 @@
 pip-bundle
 ==========
 
-[![PyPI Version](https://img.shields.io/pypi/v/ansible-tools.svg)](https://pypi.python.org/pypi/pip-bundle)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/ansible-tools.svg)](https://pypi.python.org/pypi/pip-bundle)
+[![PyPI Version](https://img.shields.io/pypi/v/pip-bundle.svg)](https://pypi.python.org/pypi/pip-bundle)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/pip-bundle.svg)](https://pypi.python.org/pypi/pip-bundle)
 [![MIT License](https://img.shields.io/badge/license-mit-blue.svg)](http://choosealicense.com/licenses/mit/)
 
 A quick and dirty script to bundle up all Python dependencies used by a project. Best used with
