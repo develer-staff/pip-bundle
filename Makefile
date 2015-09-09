@@ -6,5 +6,4 @@ DESCRIPTION.rst: README.md
 
 
 upload: all
-	python setup.py bdist upload
-	python setup.py sdist upload
+	python setup.py clean bdist bdist_wheel sdist upload
