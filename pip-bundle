@@ -28,6 +28,7 @@
 from __future__ import print_function
 
 from subprocess import check_call as call
+import argparse
 import contextlib
 import glob
 import os
@@ -35,36 +36,59 @@ import os.path
 import shutil
 import sys
 import tempfile
+import zipfile
 
 
 def main():
-    if len(sys.argv) < 2:
-        bundle_create()
+    args = parse_args()
+
+    if args.create:
+        bundle_create(args.bundle, args.requirements)
     else:
-        bundle_install(sys.argv[1])
+        bundle_install(args.bundle)
 
 
-def bundle_create():
-    cwd = os.getcwd()
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--create", action="store_true")
+    parser.add_argument("-r", "--requirements", default="requirements.txt")
+    parser.add_argument("bundle", default="bundle.pip-bundle", nargs="?")
+
+    return parser.parse_args()
+
+
+def bundle_create(bundle_file, requirements):
+    if not os.path.isabs(bundle_file):
+        bundle_file = os.path.join(os.getcwd(), bundle_file)
 
     with create_tempdir() as tempdir:
-        call(["pip", "wheel", "-r", "requirements.txt", "--wheel-dir=" + tempdir])
+        call(["pip", "wheel", "-r", requirements, "--wheel-dir=" + tempdir])
 
         with pushd(tempdir):
-            call(["tar", "cjf", os.path.join(cwd, "pip-bundle.tar.bz2")] + glob.glob("*.whl"))
+            mkzip(bundle_file, glob.glob("*.whl"))
 
 
 def bundle_install(bundle_file):
     if not os.path.isfile(bundle_file):
-        print("{0}: No such file.".format(bundle_file))
+        print("{0}: No such file, cannot install bundle.".format(bundle_file))
         sys.exit(1)
 
     with create_tempdir() as tempdir:
-        call(["tar", "xf", bundle_file, "-C", tempdir])
+        unzip(bundle_file, tempdir)
 
         with pushd(tempdir):
-            call(["pip", "install", "--force-reinstall", "--ignore-installed",
-                  "--upgrade", "--no-index", "--no-deps"] + glob.glob("*.whl"))
+            call(["pip", "install", "--force-reinstall", "--ignore-installed", "--upgrade", "--no-index", "--no-deps"] + glob.glob("*.whl"))
+
+
+def mkzip(archive, files):
+    with zipfile.ZipFile(archive, "w") as zf:
+        for f in files:
+            zf.write(f)
+
+
+def unzip(archive, where):
+    with zipfile.ZipFile(archive, "r") as zf:
+        zf.extractall(where)
 
 
 @contextlib.contextmanager
