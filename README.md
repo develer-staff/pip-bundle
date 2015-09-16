@@ -46,3 +46,5 @@ You can also change the name of the bundle by giving it on the command line:
 And you can use an alternate name for the `requirements.txt` file:
 
     pip-bundle -c -r my-own-requirements.txt
+
+__NOTE:__ The bundle should be consumed on a similar platform to the one that produced it.
