@@ -5,8 +5,10 @@ pip-bundle
 [![PyPI Downloads](https://img.shields.io/pypi/dm/pip-bundle.svg)](https://pypi.python.org/pypi/pip-bundle)
 [![MIT License](https://img.shields.io/badge/license-mit-blue.svg)](http://choosealicense.com/licenses/mit/)
 
-A quick and dirty script to bundle up all Python dependencies used by a project. Best used with
-[virtualenv](https://virtualenv.pypa.io/en/latest/).
+A quick and dirty script to bundle up all Python dependencies used by a project. It basically does
+everything described in
+[pip's manual](https://pip.pypa.io/en/stable/user_guide/?highlight=bundle#create-an-installation-bundle-with-compiled-dependencies)
+and is best used with [virtualenv](https://virtualenv.pypa.io/en/latest/).
 
 __NOTE__: This script works only if all dependencies are available through PyPI. If you have
 private dependencies you can follow instructions provided by Armin Ronacher on his blog post
