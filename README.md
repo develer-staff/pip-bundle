@@ -44,8 +44,8 @@ To install the bundle then run:
 
 You can also change the name of the bundle by giving it on the command line:
 
-    pip-bundle create mybundle.pip-bundle # Create
-    pip-bundle install mybundle.pip-bundle    # Install
+    pip-bundle create mybundle.pip-bundle  # Create
+    pip-bundle install mybundle.pip-bundle # Install
 
 And you can use an alternate name for the `requirements.txt` file:
 
