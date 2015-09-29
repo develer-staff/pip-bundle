@@ -8,6 +8,10 @@ pip-bundle
 A quick and dirty script to bundle up all Python dependencies used by a project. Best used with
 [virtualenv](https://virtualenv.pypa.io/en/latest/).
 
+__NOTE__: This script works only if all dependencies are available through PyPI. If you have
+private dependencies you can follow instructions provided by Armin Ronacher on his blog post
+[Python on Wheels](http://lucumr.pocoo.org/2014/1/27/python-on-wheels/).
+
 
 # Installation
 
