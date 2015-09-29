@@ -48,17 +48,25 @@ if not hasattr(zipfile.ZipFile, "__enter__"):
 def main():
     args = parse_args()
 
-    if args.create:
+    if args.subcommand == "create":
         bundle_create(args.bundle, args.requirements)
-    else:
+    elif args.subcommand == "install":
         bundle_install(args.bundle)
+    else:
+        print("Programmer error")
+        sys.exit(1)
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--create", action="store_true")
-    parser.add_argument("-r", "--requirements", default="requirements.txt")
-    parser.add_argument("bundle", default="bundle.pip-bundle", nargs="?")
+    subcommands = parser.add_subparsers(dest="subcommand")
+
+    parse_create = subcommands.add_parser("create")
+    parse_create.add_argument("bundle", default="bundle.pip-bundle", nargs="?")
+    parse_create.add_argument("-r", "--requirements", default="requirements.txt")
+
+    parse_install = subcommands.add_parser("install")
+    parse_install.add_argument("bundle", default="bundle.pip-bundle", nargs="?")
 
     return parser.parse_args()
 

@@ -32,19 +32,19 @@ Otherwise, if you're feeling a badass and want to `sudo` your way out, then run:
 Make sure your current directory has the `requirements.txt` file, then run the following command to
 create a file called `bundle.pip-bundle`:
 
-    pip-bundle -c
+    pip-bundle create
 
 To install the bundle then run:
 
-    pip-bundle bundle.pip-bundle
+    pip-bundle install bundle.pip-bundle
 
 You can also change the name of the bundle by giving it on the command line:
 
-    pip-bundle -c mybundle.pip-bundle # Create
-    pip-bundle mybundle.pip-bundle    # Install
+    pip-bundle create mybundle.pip-bundle # Create
+    pip-bundle install mybundle.pip-bundle    # Install
 
 And you can use an alternate name for the `requirements.txt` file:
 
-    pip-bundle -c -r my-own-requirements.txt
+    pip-bundle create -r my-own-requirements.txt
 
 __NOTE:__ The bundle should be consumed on a similar platform to the one that produced it.
