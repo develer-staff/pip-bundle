@@ -11,7 +11,7 @@ everything described in
 and is best used with [virtualenv](https://virtualenv.pypa.io/en/latest/).
 
 __NOTE__: This script works only if all dependencies are available through PyPI. If you have
-private dependencies you can follow instructions provided by Armin Ronacher on his blog post
+private dependencies you can follow instructions provided by Armin Ronacher in his blog post
 [Python on Wheels](http://lucumr.pocoo.org/2014/1/27/python-on-wheels/).
 
 
